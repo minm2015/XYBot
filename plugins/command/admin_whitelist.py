@@ -52,7 +52,7 @@ class admin_whitelist(PluginInterface):
 
                 nickname = self.db.get_nickname(wxid) # 尝试获取昵称
 
-                out_message = f"-----XYBot-----\n成功添加 {wxid} {nickname if nickname else ""} 到白名单！😊"
+                out_message = f"-----XYBot-----\n成功添加 {wxid} {nickname if nickname else ''} 到白名单！😊"
                 await self.send_friend_or_group(bot, recv, out_message)
 
             elif recv.content[1] == "移除":
@@ -60,7 +60,7 @@ class admin_whitelist(PluginInterface):
 
                 nickname = self.db.get_nickname(wxid)  # 尝试获取昵称
 
-                out_message = f"-----XYBot-----\n成功把 {wxid} {nickname if nickname else ""} 移出白名单！😊"
+                out_message = f"-----XYBot-----\n成功把 {wxid} {nickname if nickname else ''} 移出白名单！😊"
                 await self.send_friend_or_group(bot, recv, out_message)
 
             else:
