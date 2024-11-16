@@ -112,11 +112,11 @@ class XYBot:
     async def text_message_handler(self, bot: client.Wcf, recv: XYBotWxMsg) -> None:
         logger.info(f"[收到文本消息]:{recv}")
         ## 这里增加自己新增的定制监控逻辑
-        if is_subscribe_price_fluctuation_command(recv):
+        if is_subscribe_price_fluctuation_command(recv.content):
             out_message ="波动预警订阅成功"
             bot.send_text(out_message, recv.roomid)
             return
-        if is_subscribe_target_price_command(recv):
+        if is_subscribe_target_price_command(recv.content):
             out_message ="价格预警订阅成功"
             bot.send_text(out_message, recv.roomid)
             return
