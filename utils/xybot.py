@@ -14,6 +14,34 @@ from utils.database import BotDatabase
 from utils.plugin_manager import plugin_manager
 from wcferry_helper import XYBotWxMsg, async_download_image
 
+async def is_subscribe_price_fluctuation_command(command):
+        """
+        判断给定的字符串是否是订阅价格波动的指令。
+        
+        参数:
+            command (str): 待检查的字符串。
+            
+        返回:
+            bool: 如果符合订阅价格波动指令的格式（pc@**@**@**），返回 True，否则返回 False。
+        """
+        # 定义正则表达式，匹配以 "pc@" 开头，后面内容用 @ 分隔的字符串
+        pattern = r"^pc(@[^@]+){3}$"
+        return bool(re.match(pattern, command))
+    
+async def is_subscribe_target_price_command(command):
+    """
+    判断给定的字符串是否是订阅目标价格的指令。
+    
+    参数:
+        command (str): 待检查的字符串。
+        
+    返回:
+        bool: 如果符合订阅目标价格指令的格式（tgt@**@**@**），返回 True，否则返回 False。
+    """
+    # 定义正则表达式，匹配以 "tgt@" 开头，后面内容用 @ 分隔的字符串
+    pattern = r"^tgt(@[^@]+){3}$"
+    return bool(re.match(pattern, command))
+
 
 class XYBot:
     def __init__(self, bot: client.Wcf):
@@ -83,7 +111,16 @@ class XYBot:
 
     async def text_message_handler(self, bot: client.Wcf, recv: XYBotWxMsg) -> None:
         logger.info(f"[收到文本消息]:{recv}")
-
+        ## 这里增加自己新增的定制监控逻辑
+        if is_subscribe_price_fluctuation_command(recv):
+            out_message ="波动预警订阅成功"
+            bot.send_text(out_message, recv.roomid)
+            return
+        if is_subscribe_target_price_command(recv):
+            out_message ="价格预警订阅成功"
+            bot.send_text(out_message, recv.roomid)
+            return
+        #### ===============================================
         if not self.ignorance_check(recv):  # 屏蔽检查
             return
 
@@ -180,3 +217,5 @@ class XYBot:
 
         else:
             logger.error("未知的屏蔽模式！请检查白名单/黑名单设置！")
+
+    
