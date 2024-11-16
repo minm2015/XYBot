@@ -14,7 +14,7 @@ from utils.database import BotDatabase
 from utils.plugin_manager import plugin_manager
 from wcferry_helper import XYBotWxMsg, async_download_image
 
-async def is_subscribe_price_fluctuation_command(command):
+def is_subscribe_price_fluctuation_command(command):
         """
         判断给定的字符串是否是订阅价格波动的指令。
         
@@ -28,7 +28,7 @@ async def is_subscribe_price_fluctuation_command(command):
         pattern = r"^pc(@[^@]+){3}$"
         return bool(re.match(pattern, command))
     
-async def is_subscribe_target_price_command(command):
+def is_subscribe_target_price_command(command):
     """
     判断给定的字符串是否是订阅目标价格的指令。
     
