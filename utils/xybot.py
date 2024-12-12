@@ -62,12 +62,12 @@ async def monitor_announcements(exchange, bot: client.Wcf, recv: XYBotWxMsg):
         try:
             # 获取交易所最新公告
             new_announcements = await fetch_announcements(exchange)
+            announcement = new_announcements
             # 筛选出新公告
-            for announcement in new_announcements:
-                if announcement['title'] not in checked_announcements:
-                    # 推送到群组
-                    bot.send_text(f"【{exchange} 上新公告】\n{announcement['title']}\n{announcement['link']}", recv.roomid)
-                    checked_announcements.add(announcement['title'])
+            if announcement['title'] not in checked_announcements:
+                # 推送到群组
+                bot.send_text(f"【{exchange} 上新公告】\n{announcement['title']}\n{announcement['link']}", recv.roomid)
+                checked_announcements.add(announcement['title'])
             # 每隔一段时间检查
             await asyncio.sleep(3)  # 每隔 3 s检查一次
         except Exception as e:
