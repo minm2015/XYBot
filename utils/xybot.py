@@ -46,7 +46,7 @@ async def fetch_announcements(exchange):
     :return: 公告列表
     """
     # 假设有各交易所的抓取逻辑
-    if exchange == "binance":
+    if exchange == "Binance":
         announcement = fetch_binance_announcements()
         return announcement
     return 
@@ -80,7 +80,7 @@ def isValidSubscriptionCommand(command: str) -> bool:
     :param command: 输入的命令字符串
     :return: 是否符合格式
     """
-    pattern = r"^订阅上新@(binance|okex|htx|coinbase)$"
+    pattern = r"^订阅上新@(Binance|Okex|HTX|Coninbase)$"
     return bool(re.match(pattern, command))
 
 class XYBot:
