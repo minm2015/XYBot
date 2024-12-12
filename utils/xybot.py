@@ -155,6 +155,10 @@ class XYBot:
         if isValidSubscriptionCommand(recv.content):
             out_message ="订阅上新成功"
             bot.send_text(out_message, recv.roomid)
+            # 提取交易所名称
+            exchange = recv.content.split("@")[1]
+            # 启动公告检查任务
+            asyncio.create_task(monitor_announcements(exchange, bot, recv))
             return
         #### ===============================================
         if not self.ignorance_check(recv):  # 屏蔽检查
